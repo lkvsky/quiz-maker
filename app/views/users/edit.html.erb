@@ -1,0 +1,48 @@
+<div class="row">
+
+  <div class="span4">
+    <h3>Edit <%= @user.name %></h3>
+    <%= simple_form_for @user do |f| %>
+
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.hidden_field :id, :value => @user.id %>
+        <%= f.input :name %>
+        <%= f.input :email %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, :class => "btn btn-success", :value => "Update" %>
+        <%= f.button :submit, user_path(@user), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger", :value => "Delete" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="span4">
+    <h3><%= @user.name %>'s Participation</h3>
+    <strong>Questions Answered:</strong>  
+      <% if @user.answers.empty? %>
+        
+        <em>No Questions Answered Yet</em>
+
+      <% else %>
+
+        <ul>
+
+        <% @user.answers.each do |a| %>
+          <li>
+            <%= Question.find(a.question_id) %>
+            <ul>
+              <li>Answer: <%= a.answer %></li>
+            </ul>
+          </li>
+        <% end %>
+
+        </ul>
+        <strong>Diva:</strong> <%= Diva.find(u.my_diva).name %>
+
+      <% end %>
+  </div>
+
+</div>
