@@ -2,56 +2,22 @@
   <div class="span4">
     <h2>Add New Diva</h2>
 
-    <%= simple_form_for @diva, :url => divas_path, :html => { :class => "form-inline" } do |f| %>
+    <%= render :partial => "shared/diva_form", :locals => { :diva => @diva, :class_name => "btn-primary", :btn_text => "Add Diva" } %>
 
-      <%= f.error_notification %>
-
-      <div class="form-inputs">
-        <%= f.input :name %>
-        <%= f.input :description, :as => :text, :input_html => { :rows => 5 } %>
-      </div>
-
-      <div class="form-actions">
-        <%= f.button :submit, :class => "btn btn-primary", :value => "Add Diva" %>
-      </div>
-    <% end %>
   </div>
 
   <div class="span4">
     <h2>Add New Question</h2>
 
-    <%= simple_form_for @question, :url => questions_path, :html => {:class => "form-inline"} do |f| %>
+    <%= render :partial => "shared/question_form", :locals => { :question => @question, :class_name => "btn-primary", :btn_text => "Add Question" } %>
 
-      <%= f.error_notification %>
-
-      <div class="form-inputs">
-        <%= f.input :question %>
-      </div>
-
-      <div class="form-actions">
-        <%= f.button :submit, :class => "btn btn-primary", :value => "Add Question" %>
-      </div>
-    <% end %>
   </div>
 
   <div class="span4">
     <h2>Add New Answer</h2>
 
-    <%= simple_form_for @answer, :url => answers_path, :html => {:class => "form-inline"} do |f| %>
+    <%= render :partial => "shared/answer_form", :locals => { :answer => @answer, :class_name => "btn-primary", :btn_text => "Add Answer" } %>
 
-      <%= f.error_notification %>
-
-      <div class="form-inputs">
-        <%= f.input :answer %>
-        <%= f.association :question, :collection => Question.all, :label_method => :question, :value_method => :id %>
-        <%= f.association :diva, :collection => Diva.all, :label_method => :name, :value_method => :id %>
-      </div>
-
-      <div class="form-actions">
-        <%= f.button :submit, :class => "btn btn-primary", :value => "Add Answer" %>
-      </div>
-
-    <% end %>
   </div>
 </div>
 
@@ -65,17 +31,10 @@
       <% Question.all.each do |q| %>
 
       <div class="well">
-        <strong><%= q.question %></strong>
-        <ol>
 
-          <% q.answers.each do |a| %>
-            <li><%= a.answer %>, <%= Diva.find(a.diva_id).name %> <%= button_to "x", answer_path(a), :method => :delete, :class => "btn btn-danger btn-small" %></li>
-          <% end %>
-
-        </ol>
+        <%= render :partial => "shared/question_show", :locals => { :question => q } %>
 
         <%= button_to "Edit", edit_question_path(q), :method => :get, :class => "btn btn-inverse" %>
-        <%= button_to "Delete", question_path(q), :confirm => "Are you sure?", :method => :delete, :class => "btn btn-danger" %>
       </div>
 
       <% end %>
@@ -119,28 +78,8 @@
         <br>
         <strong>E-Mail Address:</strong> <%= u.email %>
         <br>
-        <strong>Questions Answered:</strong>
         
-        <% if u.answers.empty? %>
-          
-          <em>No Questions Answered Yet</em>
-
-        <% else %>
-
-          <ul>
-
-          <% u.answers.each do |a| %>
-            <li>
-              <%= Question.find(a.question_id) %>
-              <ul>
-                <li>Answer: <%= a.answer %></li>
-              </ul>
-            </li>
-          <% end %>
-
-          </ul>
-          <strong>Diva:</strong> <%= Diva.find(u.my_diva).name %>
-        <% end %>
+        <%= render :partial => "shared/user_show", :locals => { :user => u } %>
 
         <%= button_to "Edit", edit_user_path(u), :method => :get, :class => "btn btn-inverse" %>
         <%= button_to "Delete", user_path(u), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger" %>

@@ -1,0 +1,15 @@
+<%= simple_form_for answer, :url => answers_path, :html => {:class => "form-inline"} do |f| %>
+
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :answer %>
+    <%= f.association :question, :collection => Question.all, :label_method => :question, :value_method => :id %>
+    <%= f.association :diva, :collection => Diva.all, :label_method => :name, :value_method => :id %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, :class => "btn #{class_name}", :value => btn_text %>
+  </div>
+
+<% end %>

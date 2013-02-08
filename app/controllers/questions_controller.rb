@@ -12,6 +12,14 @@ class QuestionsController < ApplicationController
     redirect_to edit_quiz_path
   end
 
+  def edit
+    @question = Question.find(params[:id])
+    p @question
+  end
+
+  def update
+  end
+
   def destroy
     @question = Question.find(params[:id])
     flash[:notice] = "question destroyed"

@@ -21,28 +21,9 @@
 
   <div class="span4">
     <h3><%= @user.name %>'s Participation</h3>
-    <strong>Questions Answered:</strong>  
-      <% if @user.answers.empty? %>
-        
-        <em>No Questions Answered Yet</em>
+    
+    <%= render :partial => "shared/user_show", :locals => { :user => @user } %>
 
-      <% else %>
-
-        <ul>
-
-        <% @user.answers.each do |a| %>
-          <li>
-            <%= Question.find(a.question_id) %>
-            <ul>
-              <li>Answer: <%= a.answer %></li>
-            </ul>
-          </li>
-        <% end %>
-
-        </ul>
-        <strong>Diva:</strong> <%= Diva.find(u.my_diva).name %>
-
-      <% end %>
   </div>
 
 </div>

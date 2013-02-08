@@ -1,0 +1,13 @@
+<%= simple_form_for question, :url => questions_path, :html => {:class => "form-inline"} do |f| %>
+
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :question %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, :class => "btn #{class_name}", :value => btn_text %>
+  </div>
+
+<% end %>

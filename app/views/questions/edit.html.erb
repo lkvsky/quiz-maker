@@ -1,0 +1,26 @@
+<div class="row">
+
+  <div class="span4">
+    <h3>Question</h3>
+
+    <%= render :partial => "shared/question_show", :locals => { :question => @question } %>
+
+  </div>
+
+  <div class="span4">
+    <h3>Edit Question</h3>
+
+    <%= render :partial => "shared/question_form", :locals => { :question => @question, :class_name => "btn-success", :btn_text => "Update Question" } %>
+
+  </div>
+
+  <div class="span4">
+    <h3>Edit Answers</h3>
+    <% @question.answers.each do |a| %>
+      
+      <%= render :partial => "shared/answer_form", :locals => { :answer => a, :class_name => "btn-success", :btn_text => "Update Answer" } %>
+
+    <% end %>
+  </div>
+
+</div>
