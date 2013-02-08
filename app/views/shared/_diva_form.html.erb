@@ -1,4 +1,4 @@
-<%= simple_form_for diva, :url => divas_path, :html => { :class => "form-inline" } do |f| %>
+<%= simple_form_for diva, :html => { :class => "form-inline" } do |f| %>
 
   <%= f.error_notification %>
 
@@ -8,6 +8,16 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, :class => "btn #{class_name}", :value => btn_text %>
+
+    <% if diva.id? %>
+
+      <%= f.button :submit, :url => diva_path(diva), :class => "btn #{class_name}", :value => btn_text %>
+
+    <% else %>
+
+      <%= f.button :submit, :url => divas_path, :class => "btn #{class_name}", :value => btn_text %>
+
+    <% end %>
+
   </div>
 <% end %>

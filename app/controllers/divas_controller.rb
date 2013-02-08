@@ -12,6 +12,19 @@ class DivasController < ApplicationController
     redirect_to edit_quiz_path
   end
 
+  def edit
+    @diva = Diva.find(params[:id])
+  end
+
+  def update
+    diva = Diva.find(params[:id])
+    diva.name = params[:diva][:name]
+    diva.description = params[:diva][:description]
+    diva.save!
+
+    redirect_to edit_quiz_path
+  end
+
   def destroy
     @diva = Diva.find(params[:id])
     flash[:notice] = "diva destroyed"

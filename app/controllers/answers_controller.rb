@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    answer = Answer.find(params[:answer][:id])
+    answer = Answer.find(params[:id])
     answer.answer = params[:answer][:answer]
     answer.question_id = params[:answer][:question_id]
     answer.diva_id = params[:answer][:diva_id]

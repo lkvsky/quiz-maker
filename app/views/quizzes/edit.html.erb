@@ -82,7 +82,10 @@
         <%= render :partial => "shared/user_show", :locals => { :user => u } %>
 
         <%= button_to "Edit", edit_user_path(u), :method => :get, :class => "btn btn-inverse" %>
-        <%= button_to "Delete", user_path(u), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger" %>
+
+        <% unless @user.session_token == session[:session_token] %>
+          <%= button_to "Delete", user_path(u), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger" %>
+        <% end %>
     </div>
 
     <% end %>
