@@ -2,9 +2,9 @@
   <ol>
 
     <% question.answers.each do |a| %>
-      <li><%= a.answer %>, <%= Diva.find(a.diva_id).name %> <%= button_to "x", answer_path(a), :method => :delete, :class => "btn btn-danger btn-small" %></li>
+      <li><%= a.answer %>, <%= Diva.find(a.diva_id).name %>
     <% end %>
 
   </ol>
 
-<%= button_to "Delete", question_path(question), :confirm => "Are you sure?", :method => :delete, :class => "btn btn-danger" %>
+<%= button_to "Delete Question", question_path(question), :confirm => "Are you sure?", :method => :delete, :class => "btn btn-danger" %>

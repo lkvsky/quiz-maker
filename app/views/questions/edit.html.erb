@@ -19,6 +19,7 @@
     <% @question.answers.each do |a| %>
       
       <%= render :partial => "shared/answer_form", :locals => { :answer => a, :class_name => "btn-success", :btn_text => "Update Answer" } %>
+      <%= button_to "Delete Answer", answer_path(a), :method => "delete", :class => "btn btn-danger" %>
 
     <% end %>
   </div>

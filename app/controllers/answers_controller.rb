@@ -23,10 +23,11 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
+    answer = Answer.find(params[:id])
+    question_id = answer.question_id
     flash[:notice] = "answer destroyed"
-    @answer.destroy
+    answer.destroy
 
-    redirect_to edit_quiz_path
+    redirect_to edit_question_path(question_id)
   end
 end

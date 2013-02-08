@@ -24,14 +24,18 @@ describe User do
     end
   end
 
-  context "#finished quiz" do
+  context "#answered questions" do
     before do
       FactoryGirl.create(:diva, {:name => "One"})
       FactoryGirl.create(:diva, {:name => "Two"})
 
-      FactoryGirl.create(:question, {:question => "One"})
-      FactoryGirl.create(:question, {:question => "Two"})
-      FactoryGirl.create(:question, {:question => "Three"})
+      FactoryGirl.create(:quiz, {:name => "quiz1"})
+      FactoryGirl.create(:quiz, {:name => "quiz2"})
+
+      FactoryGirl.create(:question, {:quiz_id => Quiz.find_by_name("quiz1").id, :question => "One"})
+      FactoryGirl.create(:question, {:quiz_id => Quiz.find_by_name("quiz1").id, :question => "Two"})
+      FactoryGirl.create(:question, {:quiz_id => Quiz.find_by_name("quiz1").id, :question => "Three"})
+      FactoryGirl.create(:question, {:quiz_id => Quiz.find_by_name("quiz2").id, :question => "Four"})
 
       FactoryGirl.create(:answer, {:question_id => 1, :diva_id => 1})
       FactoryGirl.create(:answer, {:question_id => 2, :diva_id => 1})
@@ -48,9 +52,35 @@ describe User do
                            :answer_id => 3})
     end
 
+    describe "#answered_questions" do
+      it "returns an array of answered questions" do
+        user.answered_questions.count.should eq(3)
+        user.answered_questions.first.question.should eq("One")
+      end
+    end
+
     describe "#my_diva" do
       it "returns the diva id of with the highest count" do
         user.my_diva.should == 1
+      end
+    end
+
+    describe "#completed_quiz?" do
+      it "returns true if a user has answered all of the questions" do
+        quiz = Quiz.find_by_name("quiz1")
+        user.completed_quiz?(quiz).should be_true
+      end
+
+      it "returns false if a user has not answered all of the questions" do
+        quiz = Quiz.find_by_name("quiz2")
+        user.completed_quiz?(quiz).should be_false
+      end
+    end
+
+    describe "#completed_quizzes" do
+      it "returns an array of completed quizzes" do
+        completed_quiz = Quiz.find_by_name("quiz1")
+        user.completed_quizzes.first.should == completed_quiz
       end
     end
   end

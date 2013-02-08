@@ -23,4 +23,8 @@ FactoryGirl.define do
     question_id 1
     answer_id 1
   end
+
+  factory :quiz do
+    name "Diva"
+  end
 end
