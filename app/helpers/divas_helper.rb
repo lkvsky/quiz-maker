@@ -1,0 +1,2 @@
+module DivasHelper
+end

@@ -7,8 +7,16 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <container>
+    <% if flash[:notice] %>
+      <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
 
-<%= yield %>
-
+    <%= yield %>
+  
+  </container>
 </body>
 </html>

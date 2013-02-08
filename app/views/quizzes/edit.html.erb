@@ -1,0 +1,183 @@
+<div class="row">
+  <div class="span4">
+    <h2>Add New Diva</h2>
+
+    <%= simple_form_for @diva, :url => divas_path, :html => { :class => "form-inline" } do |f| %>
+
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.input :name %>
+        <%= f.input :description, :as => :text, :input_html => { :rows => 5 } %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, :class => "btn btn-primary", :value => "Add Diva" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="span4">
+    <h2>Add New Question</h2>
+
+    <%= simple_form_for @question, :url => questions_path, :html => {:class => "form-inline"} do |f| %>
+
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.input :question %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, :class => "btn btn-primary", :value => "Add Question" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="span4">
+    <h2>Add New Answer</h2>
+
+    <%= simple_form_for @answer, :url => answers_path, :html => {:class => "form-inline"} do |f| %>
+
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.input :answer %>
+        <%= f.association :question, :collection => Question.all, :label_method => :question, :value_method => :id %>
+        <%= f.association :diva, :collection => Diva.all, :label_method => :name, :value_method => :id %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, :class => "btn btn-primary", :value => "Add Answer" %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span4">
+    <h3>Current Questions</h3>
+
+    <% Question.all.each do |q| %>
+
+      <div class="well">
+
+        <% if Question.all.empty? %>
+
+          <em>No Questions Yet</em>
+
+        <% else %>
+
+          <strong><%= q.question %></strong>
+          <ol>
+
+            <% q.answers.each do |a| %>
+              <li><%= a.answer %>, <%= Diva.find(a.diva_id).name %> <%= button_to "x", answer_path(a), :method => :delete, :class => "btn btn-danger btn-small" %></li>
+            <% end %>
+
+          </ol>
+
+          <%= button_to "Delete", question_path(q), :method => :delete, :class => "btn btn-danger" %>
+
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+
+  <div class="span4">
+    <h3>Current Divas</h3>
+
+    <% Diva.all.each do |d| %>
+
+      <div class="well">
+
+        <% if Diva.all.empty? %>
+
+          <em>No Divas Yet</em>
+
+        <% else %>
+
+          <strong>Name:</strong> <%= d.name %>
+          <br>
+          <strong>Description:</strong>
+          <p><%= d.description %></p>
+          <%= button_to "Delete", diva_path(d), :method => :delete, :class => "btn btn-danger" %>
+
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+
+  <div class="span4">
+    <h3>Active Users</h3>
+
+    <% User.all.each do |u| %>
+
+      <div class="well">
+        <% if User.all.empty? %>
+
+          <em>No Users Yet</em>
+
+        <% else %>
+
+          <strong>Name:</strong> <%= u.name %>
+          <br>
+          <strong>E-Mail Address:</strong> <%= u.email %>
+          <br>
+          <strong>Questions Answered:</strong>
+          
+          <% if u.answers.empty? %>
+            
+            <em>No Questions Answered Yet</em>
+
+          <% else %>
+
+            <ul>
+
+            <% u.answers.each do |a| %>
+              <li>
+                <%= Question.find(a.question_id) %>
+                <ul>
+                  <li>Answer: <%= a.answer %></li>
+                </ul>
+              </li>
+            <% end %>
+
+            </ul>
+            <strong>Diva:</strong> <%= Diva.find(u.my_diva).name %>
+          <% end %>
+
+          <%= button_to "Delete", user_path(u), :method => :delete, :class => "btn btn-danger" %>
+
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

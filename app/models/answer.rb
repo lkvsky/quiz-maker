@@ -4,5 +4,5 @@ class Answer < ActiveRecord::Base
   belongs_to :question
   belongs_to :diva
   
-  has_many :user_answers
+  has_many :user_answers, :dependent => :destroy
 end
