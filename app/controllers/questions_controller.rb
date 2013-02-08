@@ -18,6 +18,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    question = Question.find(params[:id])
+    question.question = params[:question][:question]
+    question.save!
+
+    redirect_to edit_quiz_path
   end
 
   def destroy

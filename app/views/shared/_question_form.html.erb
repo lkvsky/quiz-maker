@@ -1,13 +1,27 @@
-<%= simple_form_for question, :url => questions_path, :html => {:class => "form-inline"} do |f| %>
+<%= simple_form_for question, :html => {:class => "form-inline"} do |f| %>
 
   <%= f.error_notification %>
 
   <div class="form-inputs">
+
+    <% if question.id? %>
+      <%= f.hidden_field :id, :value => question.id %>
+    <% end %>
+
     <%= f.input :question %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, :class => "btn #{class_name}", :value => btn_text %>
+
+    <% if question.id? %>
+
+      <%= f.button :submit, :url => answer_path(question), :class => "btn #{class_name}", :value => btn_text %>
+
+    <% else %>
+
+      <%= f.button :submit, :url => questions_path, :class => "btn #{class_name}", :value => btn_text %>
+
+    <% end %>
   </div>
 
 <% end %>
