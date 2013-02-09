@@ -10,5 +10,7 @@
 
     <% end %>
 
+    <%= button_to "Take Quiz", question_path(@quiz.questions.first), :method => :get, :class => "btn btn-primary" %>
+
   </div>
 </div>

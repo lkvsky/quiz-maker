@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="span12">
+    <h2><%= @diva.name %></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span4 offset4">
+    <p>Hey, <%= @user.name %>! You are <%= @diva.name %></p>
+    <p><%= @diva.description %></p>
+    <%= link_to "Take another quiz?", quizzes_path %>
+  </div>
+</div>

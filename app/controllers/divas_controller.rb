@@ -20,6 +20,11 @@ class DivasController < ApplicationController
     @diva = Diva.find(params[:id])
   end
 
+  def show
+    @diva = Diva.find(params[:id])
+    @user = User.find_by_session_token(session[:session_token])
+  end
+
   def update
     diva = Diva.find(params[:id])
     diva.name = params[:diva][:name]

@@ -2,10 +2,9 @@ class QuestionsController < ApplicationController
   def create
     question = Question.new(params[:question])
 
-    begin
-      question.save!
+    if question.save
       flash[:notice] = "Question successfully saved!"
-    rescue
+    else
       flash[:notice] = question.errors.full_messages.first
     end
 
@@ -13,6 +12,17 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    @question = Question.find(params[:id])
+  end
+
+  def show
+    @user = User.find_by_session_token(session[:session_token])
+
+    if @user.nil?
+      flas[:notice] = "Whoops! Looks like you're not logged in"
+      redirect_to root_path
+    end
+
     @question = Question.find(params[:id])
   end
 
