@@ -8,6 +8,7 @@
 </head>
 <body>
   <container>
+    <%= button_to "Log-Out", session_path, :method => :delete, :class => "btn btn-inverse" %>
     <% if flash[:notice] %>
       <div class="alert">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
