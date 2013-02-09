@@ -1,6 +1,6 @@
 DivaQuiz::Application.routes.draw do
-  resource :session, :only => [:new, :show, :destroy, :create]
-  resource :quiz, :only => [:show, :edit]
+  resource :session, :only => [:new, :destroy, :create]
+  resources :quizzes
   resources :users
   resources :divas
   resources :questions

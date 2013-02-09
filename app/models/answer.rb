@@ -5,4 +5,7 @@ class Answer < ActiveRecord::Base
   belongs_to :diva
   
   has_many :user_answers, :dependent => :destroy
+
+  validates :question_id, :presence => true
+  validates :diva_id, :presence => true
 end

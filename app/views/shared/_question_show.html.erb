@@ -2,7 +2,7 @@
   <ol>
 
     <% question.answers.each do |a| %>
-      <li><%= a.answer %>, <%= Diva.find(a.diva_id).name %>
+      <li><%= a.answer %>, <%= a.diva.name %>
     <% end %>
 
   </ol>

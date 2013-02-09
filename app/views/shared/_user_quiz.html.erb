@@ -1,0 +1,12 @@
+<br>
+<strong>Diva:</strong>
+
+<% if user.completed_quiz?(quiz) && !user.my_diva(quiz).nil? %>
+
+  <%= Diva.find(user.my_diva(quiz)).name %>
+
+<% else %>
+
+  <em><%= user.name %> hasn't completed this quiz yet</em>
+
+<% end %>

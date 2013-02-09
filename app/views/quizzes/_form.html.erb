@@ -1,0 +1,22 @@
+<%= simple_form_for quiz do |f| %>
+
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+  </div>
+
+  <div class="form-actions">
+
+    <% if quiz.id? %>
+
+      <%= f.button :submit, :url => quiz_path(quiz), :class => "btn #{class_name}", :value => btn_text %>
+
+    <% else %>
+
+      <%= f.button :submit, :url => quizzes_path, :class => "btn #{class_name}", :value => btn_text %>
+
+    <% end %>
+  </div>
+
+<% end %>

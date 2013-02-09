@@ -3,6 +3,7 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
+    <%= f.hidden_field :quiz_id, :value => quiz.id %>
     <%= f.input :question %>
   </div>
 

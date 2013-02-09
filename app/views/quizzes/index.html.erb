@@ -1,0 +1,74 @@
+<div class="row">
+  <div clas="span4">
+    <h3>Quizzes</h3>
+
+    <% @quizzes.each do |q| %>
+
+      <div class="well">
+        <%= link_to q.name, quiz_path(q) %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
+
+<!-- SHOW IF USER IS ADMIN -->
+
+<div class="row">
+  <div class="span12">
+    <h3>Admin Panel</h3>
+    <%= button_to "New Quiz", new_quiz_path, :method => :get, :class => "btn btn-primary" %>
+    <%= button_to "New Diva", new_diva_path, :method => :get, :class => "btn btn-primary" %>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="span6">
+    <h3>Current Divas</h3>
+
+    <% if @divas.empty? %>
+
+      <em>No Divas Yet</em>
+
+    <% else %>
+
+      <% @divas.each do |d| %>
+
+        <div class="well">
+
+          <strong>Name:</strong> <%= d.name %>
+          <br>
+          <strong>Description:</strong>
+          <p><%= d.description %></p>
+
+          <%= button_to "Edit", edit_diva_path(d), :method => :get, :class => "btn btn-inverse" %>
+          <%= button_to "Delete", diva_path(d), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger" %>
+        </div>
+
+      <% end %>
+
+    <% end %>
+  </div>
+
+  <div class="span6">
+    <h3>Active Users</h3>
+
+    <% if @users.empty? %>
+      <em>No Questions Yet</em>
+    <% end %>
+
+    <% @users.each do |u| %>
+
+      <div class="well">
+        <%= render :partial => "shared/user_show", :locals => { :user => u } %>
+        <%= button_to "Edit", edit_user_path(u), :method => :get, :class => "btn btn-inverse" %>
+
+        <% unless @current_user.session_token == session[:session_token] %>
+          <%= button_to "Delete", user_path(u), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger" %>
+        <% end %>
+    </div>
+
+    <% end %>
+  </div>
+</div>

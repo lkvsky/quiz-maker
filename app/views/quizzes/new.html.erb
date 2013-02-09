@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="span4">
+    <h3>New Quiz</h3>
+
+    <%= render :partial => "form", :locals => { :quiz => @quiz, :class_name => "btn-primary", :btn_text => "Create Quiz" } %>
+
+  </div>
+</div>
+
+<%= render :partial => "create" %>

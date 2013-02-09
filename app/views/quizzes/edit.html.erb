@@ -1,34 +1,22 @@
 <div class="row">
-  <div class="span4">
-    <h2>Add New Diva</h2>
-
-    <%= render :partial => "shared/diva_form", :locals => { :diva => @diva, :class_name => "btn-primary", :btn_text => "Add Diva" } %>
-
-  </div>
-
-  <div class="span4">
-    <h2>Add New Question</h2>
-
-    <%= render :partial => "shared/question_form", :locals => { :question => @question, :class_name => "btn-primary", :btn_text => "Add Question" } %>
-
-  </div>
-
-  <div class="span4">
-    <h2>Add New Answer</h2>
-
-    <%= render :partial => "shared/answer_form", :locals => { :answer => @answer, :class_name => "btn-primary", :btn_text => "Add Answer" } %>
-
+  <div class="span12">
+    <h2><%= @quiz.name %></h2>
   </div>
 </div>
 
+<%= render :partial => "create" %>
+
 <div class="row">
-  <div class="span4">
+  <div class="span6">
     <h3>Current Questions</h3>
 
-    <% if Question.all.empty? %>
+    <% if @quiz.questions.empty? %>
+
       <em>No Questions Yet</em>
-    <% end %>   
-      <% Question.all.each do |q| %>
+
+    <% end %>
+
+      <% @quiz.questions.each do |q| %>
 
       <div class="well">
 
@@ -40,53 +28,31 @@
       <% end %>
   </div>
 
-  <div class="span4">
-    <h3>Current Divas</h3>
-
-    <% if Diva.all.empty? %>
-      <em>No Divas Yet</em>
-    <% end %>
-
-    <% Diva.all.each do |d| %>
-
-      <div class="well">
-
-        <strong>Name:</strong> <%= d.name %>
-        <br>
-        <strong>Description:</strong>
-        <p><%= d.description %></p>
-
-        <%= button_to "Edit", edit_diva_path(d), :method => :get, :class => "btn btn-inverse" %>
-        <%= button_to "Delete", diva_path(d), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger" %>
-      </div>
-
-    <% end %>
-  </div>
-
-  <div class="span4">
-    <h3>Active Users</h3>
-
-    <% if User.all.empty? %>
-      <em>No Questions Yet</em>
-    <% end %>
+  <div class="span6">
+    <h3>Particapating Users</h3>
 
     <% User.all.each do |u| %>
 
-      <div class="well">
+      <% if u.started_quiz?(@quiz) || u.completed_quiz?(@quiz) %>
 
-        <strong>Name:</strong> <%= u.name %>
-        <br>
-        <strong>E-Mail Address:</strong> <%= u.email %>
-        <br>
-        
-        <%= render :partial => "shared/user_show", :locals => { :user => u } %>
+        <div class="well">
+          
+          <%= render :partial => "shared/user_show", :locals => { :user => u } %>
+          <%= render :partial => "shared/user_quiz", :locals => { :quiz => @quiz, :user => u } %>
 
-        <%= button_to "Edit", edit_user_path(u), :method => :get, :class => "btn btn-inverse" %>
+          <%= button_to "Edit", edit_user_path(u), :method => :get, :class => "btn btn-inverse" %>
 
-        <% unless @user.session_token == session[:session_token] %>
-          <%= button_to "Delete", user_path(u), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger" %>
-        <% end %>
-    </div>
+          <% unless u.session_token == session[:session_token] %>
+            <%= button_to "Delete", user_path(u), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger" %>
+          <% end %>
+
+        </div>
+
+      <% else %>
+
+        <em>No users have participated in this quiz</em>
+
+      <% end %>
 
     <% end %>
   </div>

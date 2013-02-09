@@ -9,4 +9,5 @@ class Question < ActiveRecord::Base
                           :source => :user
 
   validates :question, :uniqueness => true
+  validates :quiz_id, :presence => true
 end

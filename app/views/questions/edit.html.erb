@@ -10,7 +10,7 @@
   <div class="span4">
     <h3>Edit Question</h3>
 
-    <%= render :partial => "shared/question_form", :locals => { :question => @question, :class_name => "btn-success", :btn_text => "Update Question" } %>
+    <%= render :partial => "shared/question_form", :locals => { :quiz => Quiz.find(@question.quiz_id), :question => @question, :class_name => "btn-success", :btn_text => "Update Question" } %>
 
   </div>
 

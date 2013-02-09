@@ -35,11 +35,14 @@ describe User do
       FactoryGirl.create(:question, {:quiz_id => Quiz.find_by_name("quiz1").id, :question => "One"})
       FactoryGirl.create(:question, {:quiz_id => Quiz.find_by_name("quiz1").id, :question => "Two"})
       FactoryGirl.create(:question, {:quiz_id => Quiz.find_by_name("quiz1").id, :question => "Three"})
+
       FactoryGirl.create(:question, {:quiz_id => Quiz.find_by_name("quiz2").id, :question => "Four"})
+      FactoryGirl.create(:question, {:quiz_id => Quiz.find_by_name("quiz2").id, :question => "Five"})
 
       FactoryGirl.create(:answer, {:question_id => 1, :diva_id => 1})
       FactoryGirl.create(:answer, {:question_id => 2, :diva_id => 1})
       FactoryGirl.create(:answer, {:question_id => 3, :diva_id => 2})
+      FactoryGirl.create(:answer, {:question_id => 4, :diva_id => 2})
 
       FactoryGirl.create(:user_answer, {:user_id => user.id,
                                        :question_id => 1,
@@ -50,18 +53,29 @@ describe User do
       FactoryGirl.create(:user_answer, {:user_id => user.id,
                            :question_id => 3,
                            :answer_id => 3})
+      FactoryGirl.create(:user_answer, {:user_id => user.id,
+                     :question_id => 4,
+                     :answer_id => 4})
     end
 
     describe "#answered_questions" do
       it "returns an array of answered questions" do
-        user.answered_questions.count.should eq(3)
+        user.answered_questions.count.should eq(4)
         user.answered_questions.first.question.should eq("One")
       end
     end
 
     describe "#my_diva" do
       it "returns the diva id of with the highest count" do
-        user.my_diva.should == 1
+        quiz = Quiz.find_by_name("quiz1")
+        user.my_diva(quiz).should == 1
+      end
+    end
+
+    describe "#started_quiz?" do
+      it "returns true if the user has answered some or all questions" do
+        quiz = Quiz.find_by_name("quiz2")
+        user.started_quiz?(quiz).should be_true
       end
     end
 

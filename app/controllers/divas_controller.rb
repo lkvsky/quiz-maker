@@ -1,4 +1,8 @@
 class DivasController < ApplicationController
+  def new
+    @diva = Diva.new
+  end
+
   def create
     @diva = Diva.new(params[:diva])
 
@@ -9,7 +13,7 @@ class DivasController < ApplicationController
       flash[:notice] = @diva.errors.full_messages.first
     end
 
-    redirect_to edit_quiz_path
+    redirect_to quizzes_path
   end
 
   def edit
@@ -22,7 +26,7 @@ class DivasController < ApplicationController
     diva.description = params[:diva][:description]
     diva.save!
 
-    redirect_to edit_quiz_path
+    redirect_to quizzes_path
   end
 
   def destroy
@@ -30,6 +34,6 @@ class DivasController < ApplicationController
     flash[:notice] = "diva destroyed"
     @diva.destroy
 
-    redirect_to edit_quiz_path
+    redirect_to quizzes_path
   end
 end
